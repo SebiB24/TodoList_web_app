@@ -2,6 +2,7 @@ package org.example.todolistbackend.service;
 
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.example.todolistbackend.exception.InvalidLoginDataException;
 import org.example.todolistbackend.exception.UserAlreadyExistsException;
 import org.example.todolistbackend.model.User;
 import org.example.todolistbackend.model.enums.UserType;
@@ -34,5 +35,19 @@ public class AuthService implements IAuthService {
         user.setPasswordHash(hashPassword);
 
         userRepo.save(user);
+    }
+
+    @Override
+    public User checkUser(String email, String password) {
+        if(userRepo.existsUserByEmail(email)){
+            User user = userRepo.getUserByEmail(email);
+            if(passwordEncoder.matches(password, user.getPasswordHash())){
+                return user;
+            }else{
+                throw new InvalidLoginDataException("Invalid login data");
+            }
+        }else{
+            throw new InvalidLoginDataException("Invalid login data");
+        }
     }
 }
