@@ -15,6 +15,7 @@ import org.example.todolistbackend.service.IAuthService;
 import org.example.todolistbackend.service.JwtService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -51,6 +52,12 @@ public class AuthController {
         }catch (InvalidLoginDataException e){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
+    }
+
+    @PostMapping(path = "/me")
+    public ResponseEntity<UserDTO> currentUser(@AuthenticationPrincipal User user){
+        UserDTO userDto = UserMapper.userToUserDTO(user);
+        return ResponseEntity.status(HttpStatus.OK).body(userDto);
     }
 
 }

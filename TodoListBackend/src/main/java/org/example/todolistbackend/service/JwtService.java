@@ -49,16 +49,6 @@ public class JwtService {
         return Integer.parseInt(extractClaim(token, Claims::getSubject));
     }
 
-
-    /**
-     * Validates that the token belongs to the user and has not crossed its expiration threshold.
-     */
-//    public boolean isTokenValid(String token, UserDetails userDetails) {
-//        final Integer userId = extractId(token);
-//        return (userId.equals(userDetails.getId())) && !isTokenExpired(token);
-//    }
-
-
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
         final Claims claims = extractAllClaims(token);
         return claimsResolver.apply(claims);
@@ -71,15 +61,5 @@ public class JwtService {
                 .parseSignedClaims(token)
                 .getPayload();
     }
-
-    private boolean isTokenExpired(String token) {
-        return extractExpiration(token).before(new Date());
-    }
-
-    private Date extractExpiration(String token) {
-        return extractClaim(token, Claims::getExpiration);
-    }
-
-
 
 }
