@@ -1,25 +1,20 @@
 package org.example.todolistbackend.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.antlr.v4.runtime.Token;
 import org.example.todolistbackend.dto.AuthResponseDTO;
 import org.example.todolistbackend.dto.LoginDTO;
 import org.example.todolistbackend.dto.RegisterDTO;
 import org.example.todolistbackend.dto.UserDTO;
-import org.example.todolistbackend.exception.InvalidLoginDataException;
+import org.example.todolistbackend.exception.InvalidDataException;
 import org.example.todolistbackend.exception.UserAlreadyExistsException;
 import org.example.todolistbackend.mapper.UserMapper;
 import org.example.todolistbackend.model.User;
-import org.example.todolistbackend.service.AuthService;
 import org.example.todolistbackend.service.IAuthService;
 import org.example.todolistbackend.service.JwtService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
@@ -49,12 +44,12 @@ public class AuthController {
             authResponseDTO.setAccessToken(accessToken);
             authResponseDTO.setUser(userDto);
             return ResponseEntity.status(HttpStatus.OK).body(authResponseDTO);
-        }catch (InvalidLoginDataException e){
+        }catch (InvalidDataException e){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
 
-    @PostMapping(path = "/me")
+    @GetMapping(path = "/me")
     public ResponseEntity<UserDTO> currentUser(@AuthenticationPrincipal User user){
         UserDTO userDto = UserMapper.userToUserDTO(user);
         return ResponseEntity.status(HttpStatus.OK).body(userDto);

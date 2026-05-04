@@ -21,7 +21,7 @@ public class Task {
     private String name;
 
     @Enumerated(EnumType.STRING)
-    private TaskStatus status;
+    private TaskStatus status = TaskStatus.TODO;
 
     @Enumerated(EnumType.STRING)
     private TaskPriority priority;
