@@ -1,6 +1,8 @@
 package org.example.todolistbackend.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.antlr.v4.runtime.Token;
+import org.example.todolistbackend.dto.AuthResponseDTO;
 import org.example.todolistbackend.dto.LoginDTO;
 import org.example.todolistbackend.dto.RegisterDTO;
 import org.example.todolistbackend.dto.UserDTO;
@@ -24,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
     private final IAuthService authService;
+    private final JwtService jwtService;
 
     @PostMapping(path = "/register")
     public ResponseEntity<Void> registerUser(@RequestBody RegisterDTO registerDto){
@@ -36,11 +39,15 @@ public class AuthController {
     }
 
     @PostMapping(path = "/login")
-    public ResponseEntity<UserDTO> login(@RequestBody LoginDTO loginDto){
+    public ResponseEntity<AuthResponseDTO> login(@RequestBody LoginDTO loginDto){
         try{
             User user = authService.checkUser(loginDto.getEmail(), loginDto.getPassword());
             UserDTO userDto = UserMapper.userToUserDTO(user);
-            return ResponseEntity.status(HttpStatus.OK).body(userDto);
+            AuthResponseDTO authResponseDTO = new AuthResponseDTO();
+            String accessToken = jwtService.generateToken(user);
+            authResponseDTO.setAccessToken(accessToken);
+            authResponseDTO.setUser(userDto);
+            return ResponseEntity.status(HttpStatus.OK).body(authResponseDTO);
         }catch (InvalidLoginDataException e){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }

@@ -14,11 +14,10 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable()) // Usually disabled for JWT APIs
                 .authorizeHttpRequests(auth -> auth
-                        // 1. Whitelist Auth endpoints so people can actually log in/register
                         .requestMatchers("/todo/**").permitAll()
-                        // 2. Whitelist Swagger UI and OpenAPI docs
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
-                        // 3. Lock down everything else!
+                        .requestMatchers("/error").permitAll()
+
                         .anyRequest().authenticated()
                 );
         // ... (your other JWT configuration here)

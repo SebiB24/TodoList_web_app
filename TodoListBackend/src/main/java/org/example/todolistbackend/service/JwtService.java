@@ -5,6 +5,8 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import org.example.todolistbackend.model.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 
@@ -19,8 +21,10 @@ import java.util.function.Function;
 @Service
 public class JwtService {
 
+    @Value("${jwt.secretKey}")
     private String secretKey;
 
+    @Value("${jwt.expiration}")
     private long expirationMs;
 
 
