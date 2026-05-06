@@ -1,9 +1,42 @@
 import './LoginForm.css'
 import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import { useState } from 'react'
+import ApiService from '../api/ApiService'
 
-function LoginForm() {
-    const handleSubmit = async (e) => {
-        e.preventDefault()
+function LoginForm({ onloginSuccess }) {
+
+    const navigate = useNavigate()
+
+    const[errorMsg, setErrorMsg] = useState('')
+
+    const handleSubmit = async (event) => {
+        event.preventDefault()
+        setErrorMsg('')
+
+        const formData = new FormData(event.target)
+
+        const loginData = {
+            email: formData.get('email'),
+            password: formData.get('password')
+        }
+
+        try{
+            const response = await ApiService.login(loginData)
+            const responseUserData = response.user
+            const userData = {
+                name: responseUserData.name,
+                email: responseUserData.email,
+                type: responseUserData.userType,
+                score: responseUserData.score
+            }
+            onloginSuccess(userData)
+            navigate('/home')
+
+        }catch(error){
+            console.error('Login error:', error)
+            setErrorMsg('Invalid email or password.')
+        }
 
     }
 

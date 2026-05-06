@@ -8,6 +8,17 @@ const ApiService = {
         } catch (error) {
             throw error;
         }
+    },
+
+    login: async (loginData) => {
+        try {
+            const response = await api.post('/auth/login', loginData);
+            console.log('Login response:', response.data);
+            localStorage.setItem('token', response.data.accessToken);
+            return response.data;
+        } catch (error) {
+            throw error;
+        }
     }
 };
 

@@ -1,9 +1,9 @@
 import LoginForm from '../components/LoginForm'
 
-function LoginPage() {
+function LoginPage({ onloginSuccess }) {
     return (
         <div className="LoginPage">
-            <LoginForm />
+            <LoginForm onloginSuccess={onloginSuccess} />
         </div>
     )
 }

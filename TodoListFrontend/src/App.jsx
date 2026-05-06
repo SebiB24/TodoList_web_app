@@ -8,15 +8,21 @@ import HomePage from './pages/HomePage'
 
 
 function App() {
-  const [count, setCount] = useState(0)
-
+  const [userData, setUserData] = useState(
+    {
+      name: '',
+      email: '',
+      type: '',
+      score: 0
+    }
+  )
   return (
     <div className="App-layout">
       <Routes>
-        <Route path="/" element={<LoginPage />} />
-        <Route path="/login" element={<LoginPage />} />
+        <Route path="/" element={<LoginPage onloginSuccess={setUserData} />} />
+        <Route path="/login" element={<LoginPage onloginSuccess={setUserData} />} />
         <Route path="/register" element={<RegisterPage />} />
-        <Route path="/home" element={<HomePage />} />
+        <Route path="/home" element={<HomePage userData={userData} />} />
       </Routes>
     </div>
   )
