@@ -1,7 +1,9 @@
+import RegisterForm from '../components/RegisterForm'
+
 function RegisterPage() {
   return (
     <div className="RegisterPage">
-      <h1>Register Page</h1>
+      <RegisterForm />
     </div>
   )
 }
