@@ -30,7 +30,6 @@ function LoginForm({ onloginSuccess }) {
                 type: responseUserData.userType,
                 score: responseUserData.score
             }
-            console.log('User data to store:', userData)
             localStorage.setItem('userData', JSON.stringify(userData))
             onloginSuccess(userData)
             navigate('/home')

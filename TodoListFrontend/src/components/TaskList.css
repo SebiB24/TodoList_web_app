@@ -1,0 +1,33 @@
+.task-list-container {
+    background-color: #ebebeb; 
+    padding: 40px;
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+
+.main-title {
+    font-size: 2.5rem;
+    font-weight: 800; 
+    color: #000000;
+    margin-top: 0;
+    margin-bottom: 30px;
+}
+
+.priority-section {
+    margin-bottom: 40px;
+}
+
+.priority-header {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #000000;
+    border-bottom: 1px solid #000000; 
+    padding-bottom: 5px;
+    margin-bottom: 15px;
+}
+
+.task-group {
+    display: flex;
+    flex-direction: column;
+    padding-left: 20px;
+}

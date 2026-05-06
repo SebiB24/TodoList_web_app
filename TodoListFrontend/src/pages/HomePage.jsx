@@ -1,9 +1,16 @@
+import SideMenu from "../components/SideMenu"
+import TaskList from "../components/TaskList"
+import "./HomePage.css"
+
 function HomePage({ userData }) {
 
   return (
-    <div className="HomePage">
-      <h1>Home Page</h1>
-      <p>Welcome, {userData.name}!</p>
+    <div className="home-page-layout">
+      <SideMenu userData={userData}/>
+      <div className="main-content">
+        <TaskList />
+      </div>
+
     </div>
   )
 }
