@@ -20,9 +20,20 @@ const ApiService = {
         }
     },
 
+// TASKS ----------------------------------------------------------------------------------------------------
+
     loadTasks: async (filters) => {
         try {
             const response = await api.get('/tasks', { params: filters });
+            return response.data;
+        } catch (error) {
+            throw error;
+        }
+    },
+
+    createTask: async (createTaskData) => {
+        try {
+            const response = await api.post('/tasks', createTaskData);
             return response.data;
         } catch (error) {
             throw error;

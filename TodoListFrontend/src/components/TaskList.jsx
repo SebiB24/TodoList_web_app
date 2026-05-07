@@ -4,7 +4,7 @@ import TaskListItem from "./TaskListItem";
 import { useState, useEffect } from "react";
 import "./TaskList.css"
 
-function TaskList({ filters }) {
+function TaskList({ filters, update }) {
     let status = filters.status;
     let today = filters.today;
 
@@ -26,7 +26,7 @@ function TaskList({ filters }) {
         };
 
         fetchTasks();
-    }, [status, today]);
+    }, [status, today, update]);
 
     const priority1Tasks = tasks.filter(task => task.priority === TaskPriority.PRIORITY_1);
     const priority2Tasks = tasks.filter(task => task.priority === TaskPriority.PRIORITY_2);

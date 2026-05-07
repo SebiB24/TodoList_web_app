@@ -19,3 +19,13 @@ export class Task {
         this.dueDate = dueDate;
     }
 }
+
+export class CreateTaskDTO {
+    constructor(name, description, priority, dueDate, daily) {
+        this.name = name;
+        this.description = description;
+        this.priority = priority;
+        this.dueDate = dueDate;
+        this.daily = daily;
+    }
+}
