@@ -3,14 +3,42 @@ import { useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faInbox, faClockRotateLeft } from '@fortawesome/free-solid-svg-icons'
 import { faUser, faCalendar } from '@fortawesome/free-regular-svg-icons'
+import { TaskStatus } from '../models/Task'
 
 import './SideMenu.css'
 
-function SideMenu({ userData }) {
+function SideMenu({ userData, changeFilters }) {
   let userName = userData.name
 
+  const[activeButton, setActiveButton] = useState('all')
+
+
+  const handleAllTasksClick = () => {
+    setActiveButton('all')
+    changeFilters({
+      status: TaskStatus.TODO,
+      today: false
+    })
+  }
+
+  const handleTodayClick = () => {
+    setActiveButton('today')
+    changeFilters({
+      status: TaskStatus.TODO,
+      today: true
+    })
+  }
+
+  const handleHistoryClick = () => {
+    setActiveButton('history')
+    changeFilters({
+      status: TaskStatus.COMPLETE,
+      today: false
+    })
+  }
+
   return (
-    
+
     <div className="sidebar">
       <div className="user-profile">
         <div className="avatar-container">
@@ -20,20 +48,20 @@ function SideMenu({ userData }) {
       </div>
 
       <nav className="nav-menu">
-        <a href="#" className="menu-item active">
+        <label onClick={handleAllTasksClick} className={`menu-item ${activeButton === 'all' ? 'active' : ''}`}>
           <FontAwesomeIcon icon={faInbox} />
           <span className="menu-text">All tasks</span>
-        </a>
+        </label>
 
-        <a href="#" className="menu-item">
+        <label onClick={handleTodayClick} className={`menu-item ${activeButton === 'today' ? 'active' : ''}`}>
           <FontAwesomeIcon icon={faCalendar} />
           <span className="menu-text">Today</span>
-        </a>
+        </label>
 
-        <a href="#" className="menu-item">
+        <label onClick={handleHistoryClick} className={`menu-item ${activeButton === 'history' ? 'active' : ''}`}>
           <FontAwesomeIcon icon={faClockRotateLeft} />
           <span className="menu-text">History</span>
-        </a>
+        </label>
       </nav>
     </div>
   )

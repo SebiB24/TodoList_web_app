@@ -4,9 +4,9 @@ import TaskListItem from "./TaskListItem";
 import { useState, useEffect } from "react";
 import "./TaskList.css"
 
-function TaskList() {
-    let status = TaskStatus.TODO;
-    let today = false;
+function TaskList({ filters }) {
+    let status = filters.status;
+    let today = filters.today;
 
     const [tasks, setTasks] = useState([]);
 

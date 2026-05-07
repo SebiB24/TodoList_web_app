@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import ApiService from '../api/ApiService'
+import { User } from '../models/User'
 
 function LoginForm({ onloginSuccess }) {
 
@@ -24,12 +25,12 @@ function LoginForm({ onloginSuccess }) {
         try{
             const response = await ApiService.login(loginData)
             const responseUserData = response.user
-            const userData = {
-                name: responseUserData.name,
-                email: responseUserData.email,
-                type: responseUserData.userType,
-                score: responseUserData.score
-            }
+            const userData = new User(
+                responseUserData.name, 
+                responseUserData.email, 
+                responseUserData.userType, 
+                responseUserData.score
+            )
             localStorage.setItem('userData', JSON.stringify(userData))
             onloginSuccess(userData)
             navigate('/home')
