@@ -12,18 +12,26 @@
     align-items: center;
     gap: 15px;
     margin-bottom: 30px;
-    padding-left: 5px;
+    padding: 10px;
+}
+
+.user-profile:hover {
+    cursor: pointer;
+    background-color: #f3f4f6;
+    border-radius: 8px;
 }
 
 .avatar-container {
-    width: 45px;
-    height: 45px;
-    background-color: #38bdf8; 
-    border-radius: 12px;
+    width: 60px;
+    height: 60px;
+    background-color: #66b5dc; 
+    border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
-    box-shadow: 0 4px 6px rgba(56, 189, 248, 0.4); 
+    font-size: 1.8rem;
+    color: #555555;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
 }
 
 .avatar-container i {
@@ -32,8 +40,8 @@
 }
 
 .user-name {
-    font-size: 1.25rem;
-    font-weight: 500;
+    font-size: 1.5rem;
+    font-weight: 700;
     color: #111827;
     margin: 0;
 }

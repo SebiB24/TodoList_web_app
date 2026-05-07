@@ -5,8 +5,6 @@ import { useState, useEffect } from "react";
 import "./TaskList.css"
 
 function TaskList({ filters, update }) {
-    let status = filters.status;
-    let today = filters.today;
 
     const [tasks, setTasks] = useState([]);
 
@@ -14,8 +12,8 @@ function TaskList({ filters, update }) {
         const fetchTasks = async () => {
             try {
                 const response = await ApiService.loadTasks({
-                    status: status,
-                    today: today
+                    status: filters.status,
+                    today: filters.today
                 });
                 if (response) {
                     setTasks(response);
@@ -26,7 +24,7 @@ function TaskList({ filters, update }) {
         };
 
         fetchTasks();
-    }, [status, today, update]);
+    }, [filters, update]);
 
     const priority1Tasks = tasks.filter(task => task.priority === TaskPriority.PRIORITY_1);
     const priority2Tasks = tasks.filter(task => task.priority === TaskPriority.PRIORITY_2);

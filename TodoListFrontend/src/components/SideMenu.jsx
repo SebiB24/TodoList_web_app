@@ -7,7 +7,7 @@ import { TaskStatus } from '../models/Task'
 
 import './SideMenu.css'
 
-function SideMenu({ userData, changeFilters }) {
+function SideMenu({ userData, changeFilters, setShowUserProfile }) {
   let userName = userData.name
 
   const[activeButton, setActiveButton] = useState('all')
@@ -40,7 +40,7 @@ function SideMenu({ userData, changeFilters }) {
   return (
 
     <div className="sidebar">
-      <div className="user-profile">
+      <div className="user-profile" onClick={() => setShowUserProfile(true)}>
         <div className="avatar-container">
           <FontAwesomeIcon icon={faUser} />
         </div>

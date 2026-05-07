@@ -4,7 +4,7 @@ import "./HomePage.css"
 import { useState, useEffect, useRef } from "react"
 import { Task, TaskStatus } from "../models/Task"
 import { AddTaskButton, AddTaskForm } from "../components/AddTask"
-
+import UserProfile from "../components/UserProfile"
 
 function HomePage({ userData }) {
 
@@ -12,12 +12,14 @@ function HomePage({ userData }) {
     status: TaskStatus.TODO,
     today: false
   })
-
   const [showCreateTaskForm, setShowCreateTaskForm] = useState(false)
-
+  const [showUserProfile, setShowUserProfile] = useState(false)
   const [update, setUpdate] = useState(false)
 
+
   const formRef = useRef(null)
+  const profileRef = useRef(null)
+
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -34,9 +36,25 @@ function HomePage({ userData }) {
     }
   }, [showCreateTaskForm])
 
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (profileRef.current && !profileRef.current.contains(event.target)) {
+        setShowUserProfile(false)
+      }
+    }
+    if (showUserProfile) {
+      document.addEventListener("mousedown", handleClickOutside)
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside)
+    }
+  }, [showUserProfile])
+
+
   return (
     <div className="home-page-layout">
-      <SideMenu userData={userData} changeFilters={setListFilters} />
+      <SideMenu userData={userData} changeFilters={setListFilters} setShowUserProfile={setShowUserProfile} />
       <div className="main-content">
         <TaskList filters={listFilters} update={update} />
       </div>
@@ -44,6 +62,14 @@ function HomePage({ userData }) {
       {showCreateTaskForm &&
         <div className="popup-overlay" ref={formRef} >
           <AddTaskForm setShowCreateTaskForm={setShowCreateTaskForm} setUpdate={setUpdate} />
+        </div>
+      }
+      {showUserProfile &&
+
+        <div className="profile-popup-overlay" >
+          <div ref={profileRef} >
+            <UserProfile userData={userData} />
+          </div>
         </div>
       }
     </div>
