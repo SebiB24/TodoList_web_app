@@ -49,4 +49,9 @@ public class AuthService implements IAuthService {
             throw new InvalidDataException("Invalid login data");
         }
     }
+
+    @Override
+    public void logout() {
+        return;
+    }
 }

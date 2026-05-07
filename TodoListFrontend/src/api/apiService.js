@@ -20,6 +20,17 @@ const ApiService = {
         }
     },
 
+    logout: async () => {
+        try{
+            const response = await api.post('/auth/logout');
+            localStorage.removeItem('token');
+            localStorage.removeItem('userData');
+            return response.data;
+        } catch (error) {
+            throw error;
+        }
+    },
+
 // TASKS ----------------------------------------------------------------------------------------------------
 
     loadTasks: async (filters) => {

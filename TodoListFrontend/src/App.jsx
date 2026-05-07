@@ -20,13 +20,13 @@ function App() {
       score: 0
     }
   })
-  
+
   return (
     <div className="App-layout">
       <Routes>
-        <Route path="/" element={<LoginPage onloginSuccess={setUserData}/>} />
-        <Route path="/login" element={<LoginPage onloginSuccess={setUserData}/>} />
-        <Route path="/register" element={<RegisterPage/>} />
+        <Route path="/" element={<LoginPage onloginSuccess={setUserData} />} />
+        <Route path="/login" element={<LoginPage onloginSuccess={setUserData} />} />
+        <Route path="/register" element={<RegisterPage />} />
         <Route path="/home" element={<HomePage userData={userData} />} />
       </Routes>
     </div>

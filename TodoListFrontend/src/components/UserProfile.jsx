@@ -2,8 +2,17 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faUser } from "@fortawesome/free-solid-svg-icons"
 import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons"
 import "./UserProfile.css"
+import { useNavigate } from 'react-router-dom'
+import ApiService from "../api/ApiService"
 
 const UserProfile = ({ userData }) => {
+
+    const navigate = useNavigate()
+
+    const handleLogout = async () => {
+        const response = await ApiService.logout()
+        navigate('/login')
+    }
 
     return (
         <div className="profile-card-container">
@@ -19,7 +28,7 @@ const UserProfile = ({ userData }) => {
                 <p className="user-score"><span>Score:</span> {userData.score}</p>
             </div>
             <div className="action-section">
-                <button className="logout-button">
+                <button className="logout-button" onClick={handleLogout}>
                     <FontAwesomeIcon icon={faRightFromBracket} /> Logout
                 </button>
             </div>

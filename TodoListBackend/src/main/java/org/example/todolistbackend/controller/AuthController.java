@@ -55,4 +55,10 @@ public class AuthController {
         return ResponseEntity.status(HttpStatus.OK).body(userDto);
     }
 
+    @PostMapping(path="/logout")
+    public ResponseEntity<Void> logout(@AuthenticationPrincipal User user){
+        authService.logout();
+        return  ResponseEntity.status(HttpStatus.OK).build();
+    }
+
 }
