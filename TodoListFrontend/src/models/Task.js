@@ -29,3 +29,16 @@ export class CreateTaskDTO {
         this.daily = daily;
     }
 }
+
+export const isTaskDueToday = (task) => {
+    const dueDateString = task.dueDate;
+    if (!dueDateString) return false;
+
+    const today = new Date();
+
+    const [year, month, day] = dueDateString.split('-');
+
+    const taskDate = new Date(year, month - 1, day);
+
+    return today.toDateString() === taskDate.toDateString();
+}

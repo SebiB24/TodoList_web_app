@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faCircle as solidCircle, faArrowsRotate } from '@fortawesome/free-solid-svg-icons';
 import { faCalendar } from '@fortawesome/free-regular-svg-icons';
+import { isTaskDueToday } from "../models/Task";
 import "./TaskListItem.css"
 
 function TaskListItem({ task }) {
@@ -15,8 +16,11 @@ function TaskListItem({ task }) {
 
                 <div className="task-meta">
                     <span className="task-date">
-                        <FontAwesomeIcon icon={faCalendar} />
-                        Tomorrow
+
+                        {isTaskDueToday(task) ?
+                            <p style={{ "color": "#4ec62a" }}> <FontAwesomeIcon icon={faCalendar} />Today</p>
+                            : <p><FontAwesomeIcon icon={faCalendar} /> {task.dueDate}</p>
+                        }
                     </span>
                     {task.daily && (
                         <span className="task-recurring">
