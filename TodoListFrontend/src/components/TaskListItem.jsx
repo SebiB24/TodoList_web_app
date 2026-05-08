@@ -1,10 +1,22 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faCircle as solidCircle, faArrowsRotate } from '@fortawesome/free-solid-svg-icons';
 import { faCalendar } from '@fortawesome/free-regular-svg-icons';
-import { isTaskDueToday } from "../models/Task";
+import { isTaskDueToday, isTaskPastDue } from "../models/Task";
 import "./TaskListItem.css"
+import { useState } from "react";
 
 function TaskListItem({ task }) {
+
+    const [taskDueStatus, setTaskDueStatus] = useState(() => {
+        if (isTaskDueToday(task)) {
+            return 'today';
+        }
+        if (isTaskPastDue(task)) {
+            return 'overdue';
+        }
+        return 'upcoming';
+    });
+
     return (
         <div className="task-item">
             <div className="task-checkbox">
@@ -15,12 +27,8 @@ function TaskListItem({ task }) {
                 <span className="task-title">{task.name}</span>
 
                 <div className="task-meta">
-                    <span className="task-date">
-
-                        {isTaskDueToday(task) ?
-                            <p style={{ "color": "#4ec62a" }}> <FontAwesomeIcon icon={faCalendar} />Today</p>
-                            : <p><FontAwesomeIcon icon={faCalendar} /> {task.dueDate}</p>
-                        }
+                    <span className={`task-date ${taskDueStatus}`}>
+                        <p><FontAwesomeIcon icon={faCalendar} /> {taskDueStatus}</p>
                     </span>
                     {task.daily && (
                         <span className="task-recurring">
