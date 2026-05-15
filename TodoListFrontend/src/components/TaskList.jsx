@@ -4,7 +4,7 @@ import TaskListItem from "./TaskListItem";
 import { useState, useEffect } from "react";
 import "./TaskList.css"
 
-function TaskList({ filters, update }) {
+function TaskList({ filters, update, setUpdate }) {
 
     const [tasks, setTasks] = useState([]);
     const [title, setTitle] = useState("All Tasks");
@@ -53,7 +53,7 @@ return (
                 <div className="task-group">
                     {
                         priority1Tasks.map((task, index) => (
-                            <TaskListItem key={index} task={task} />
+                            <TaskListItem key={task.id} task={task} setUpdate={setUpdate}/>
                         ))
                     }
                 </div>
@@ -65,7 +65,7 @@ return (
                 <div className="task-group">
                     {
                         priority2Tasks.map((task, index) => (
-                            <TaskListItem key={index} task={task} />
+                            <TaskListItem key={index} task={task} setUpdate={setUpdate} />
                         ))
                     }
                 </div>
@@ -77,7 +77,7 @@ return (
                 <div className="task-group">
                     {
                         priority3Tasks.map((task, index) => (
-                            <TaskListItem key={index} task={task} />
+                            <TaskListItem key={index} task={task} setUpdate={setUpdate}/>
                         ))
                     }
                 </div>

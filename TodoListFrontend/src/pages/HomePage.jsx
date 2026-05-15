@@ -56,7 +56,7 @@ function HomePage({ userData }) {
     <div className="home-page-layout">
       <SideMenu userData={userData} changeFilters={setListFilters} setShowUserProfile={setShowUserProfile} />
       <div className="main-content">
-        <TaskList filters={listFilters} update={update} />
+        <TaskList filters={listFilters} update={update} setUpdate={setUpdate}/>
       </div>
       {!showCreateTaskForm && <AddTaskButton onClick={() => setShowCreateTaskForm(true)} />}
       {showCreateTaskForm &&

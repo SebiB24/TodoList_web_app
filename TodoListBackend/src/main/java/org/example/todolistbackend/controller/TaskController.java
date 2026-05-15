@@ -23,9 +23,9 @@ import java.util.stream.Collectors;
 public class TaskController {
     private final TaskService taskService;
 
-    @PutMapping(path = "/complete")
+    @PutMapping(path = "/{taskId}/complete")
     public ResponseEntity<TaskDTO> completeTask(
-            @RequestParam Integer taskId,
+            @PathVariable Integer taskId,
             @AuthenticationPrincipal User user){
         Task task = taskService.completeTask(taskId, user);
         TaskDTO taskDto = TaskMapper.taskToTaskDTO(task);

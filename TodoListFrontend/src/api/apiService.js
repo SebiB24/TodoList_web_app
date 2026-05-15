@@ -49,6 +49,14 @@ const ApiService = {
         } catch (error) {
             throw error;
         }
+    },
+
+    completeTask: async(taskId) =>{
+        try{
+            const response = await api.put(`/tasks/${taskId}/complete`);
+        }catch(error){
+            throw error;
+        }
     }
 };
 

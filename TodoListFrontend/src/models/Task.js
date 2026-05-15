@@ -10,7 +10,8 @@ export const TaskPriority = Object.freeze({
 });
 
 export class Task {
-    constructor(name, description, status, priority, daily, dueDate) {
+    constructor(id, name, description, status, priority, daily, dueDate) {
+        this.id = id;
         this.name = name;
         this.description = description;
         this.status = status;

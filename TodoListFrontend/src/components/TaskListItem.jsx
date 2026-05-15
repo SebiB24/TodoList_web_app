@@ -3,9 +3,10 @@ import { faCircle as solidCircle, faArrowsRotate } from '@fortawesome/free-solid
 import { faCalendar } from '@fortawesome/free-regular-svg-icons';
 import { isTaskDueToday, isTaskPastDue } from "../models/Task";
 import "./TaskListItem.css"
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import ApiService from "../api/apiService";
 
-function TaskListItem({ task }) {
+function TaskListItem({ task, setUpdate }) {
 
     const [taskDueStatus, setTaskDueStatus] = useState(() => {
         if (isTaskDueToday(task)) {
@@ -17,9 +18,19 @@ function TaskListItem({ task }) {
         return 'upcoming';
     });
 
+    const onCompleteTask = async (event) => {
+        try {
+            await ApiService.completeTask(task.id)
+            setUpdate(prev => !prev)
+        }catch(error){
+            console.log(error)
+        }
+        
+    }
+
     return (
         <div className="task-item">
-            <div className="task-checkbox">
+            <div className="task-checkbox" onClick={onCompleteTask}>
                 <FontAwesomeIcon icon={solidCircle} className="circle-icon" />
             </div>
 
