@@ -13,4 +13,5 @@ import java.util.List;
 public interface ITasksRepo extends JpaRepository<Task, Integer> {
     public List<Task> findTasksByUserAndStatus(User user, TaskStatus status);
     public List<Task> findTasksByUserAndStatusAndDueDate(User user, TaskStatus status, LocalDate dueDate);
+    public Task findTaskById(Integer taskId);
 }

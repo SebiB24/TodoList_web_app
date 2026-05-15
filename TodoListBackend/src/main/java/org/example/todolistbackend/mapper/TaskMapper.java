@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 public class TaskMapper {
     public static TaskDTO taskToTaskDTO(Task task){
         TaskDTO taskDTO = new TaskDTO();
+        taskDTO.setId(task.getId());
         taskDTO.setName(task.getName());
         taskDTO.setStatus(task.getStatus());
         taskDTO.setPriority(task.getPriority());

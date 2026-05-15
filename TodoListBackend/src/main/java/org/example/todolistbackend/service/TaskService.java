@@ -2,6 +2,7 @@ package org.example.todolistbackend.service;
 
 import lombok.RequiredArgsConstructor;
 import org.example.todolistbackend.dto.CreateTaskDTO;
+import org.example.todolistbackend.dto.TaskDTO;
 import org.example.todolistbackend.model.Task;
 import org.example.todolistbackend.model.User;
 import org.example.todolistbackend.model.enums.TaskStatus;
@@ -37,5 +38,11 @@ public class TaskService {
             return tasksRepo.findTasksByUserAndStatusAndDueDate(user, status, todayDate);
         }
         return tasksRepo.findTasksByUserAndStatus(user, status);
+    }
+
+    public Task completeTask(Integer taskId, User user){
+        Task task = tasksRepo.findTaskById(taskId);
+        task.setStatus(TaskStatus.COMPLETE);
+        return task;
     }
 }
