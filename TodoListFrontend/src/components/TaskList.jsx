@@ -1,8 +1,9 @@
 import ApiService from "../api/ApiService";
 import { TaskStatus, TaskPriority } from "../models/Task";
 import TaskListItem from "./TaskListItem";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import "./TaskList.css"
+import TaskDetail from "./TaskDetail";
 
 export const ListTypes = Object.freeze({
     ALL: "ALL",
@@ -15,6 +16,9 @@ function TaskList({ filters, update, setUpdate }) {
     const [tasks, setTasks] = useState([]);
     const [title, setTitle] = useState("All Tasks");
     const [listType, setListType] = useState(ListTypes.ALL);
+    const [displayedTask, setdisplayedTask ] = useState(null);
+
+    const detailRef = useRef(null)
 
 
     useEffect(() => {
@@ -37,6 +41,22 @@ function TaskList({ filters, update, setUpdate }) {
 
         fetchTasks();
     }, [filters, update]);
+
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (detailRef.current && !detailRef.current.contains(event.target)) {
+                setdisplayedTask(null)
+            }
+        }
+        if (setdisplayedTask) {
+            document.addEventListener("mousedown", handleClickOutside)
+        }
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside)
+        }
+    }, [setdisplayedTask])
+
 
     const priority1Tasks = tasks.filter(task => task.priority === TaskPriority.PRIORITY_1);
     const priority2Tasks = tasks.filter(task => task.priority === TaskPriority.PRIORITY_2);
@@ -63,7 +83,17 @@ function TaskList({ filters, update, setUpdate }) {
     }
 
     return (
+
         <div className="task-list-container">
+
+            {displayedTask && (
+                <div className="detail-popup-overlay">
+                    <div ref={detailRef}>
+                        <TaskDetail task={displayedTask}></TaskDetail>
+                    </div>
+                </div>
+            )}
+
             <h1 className="main-title">{title}</h1>
             {priority1Tasks.length > 0 && (
                 <div className="priority-section">
@@ -71,7 +101,7 @@ function TaskList({ filters, update, setUpdate }) {
                     <div className="task-group">
                         {
                             priority1Tasks.map((task, index) => (
-                                <TaskListItem key={task.id} task={task} listType={listType} setUpdate={setUpdate} />
+                                <TaskListItem key={task.id} task={task} listType={listType} setUpdate={setUpdate} setdisplayedTask={setdisplayedTask} />
                             ))
                         }
                     </div>
@@ -83,7 +113,7 @@ function TaskList({ filters, update, setUpdate }) {
                     <div className="task-group">
                         {
                             priority2Tasks.map((task, index) => (
-                                <TaskListItem key={index} task={task} listType={listType} setUpdate={setUpdate} />
+                                <TaskListItem key={index} task={task} listType={listType} setUpdate={setUpdate} setdisplayedTask={setdisplayedTask}/>
                             ))
                         }
                     </div>
@@ -95,7 +125,7 @@ function TaskList({ filters, update, setUpdate }) {
                     <div className="task-group">
                         {
                             priority3Tasks.map((task, index) => (
-                                <TaskListItem key={index} task={task} listType={listType} setUpdate={setUpdate} />
+                                <TaskListItem key={index} task={task} listType={listType} setUpdate={setUpdate} setdisplayedTask={setdisplayedTask}/>
                             ))
                         }
                     </div>

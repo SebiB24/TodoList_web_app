@@ -9,7 +9,7 @@ import ApiService from "../api/apiService";
 import { ListTypes } from "./TaskList";
 
 
-function TaskListItem({ task, setUpdate, listType }) {
+function TaskListItem({ task, setUpdate, listType, setdisplayedTask }) {
 
     const [taskDueStatus, setTaskDueStatus] = useState(() => {
         if (isTaskDueToday(task)) {
@@ -22,6 +22,7 @@ function TaskListItem({ task, setUpdate, listType }) {
     });
 
     const onCompleteTask = async (event) => {
+        event.stopPropagation();
         try {
             await ApiService.completeTask(task.id)
             setUpdate(prev => !prev)
@@ -32,6 +33,8 @@ function TaskListItem({ task, setUpdate, listType }) {
     }
 
     const onUndoTask = async (event) => {
+        event.stopPropagation();
+
         try {
             await ApiService.undoTask(task.id)
             setUpdate(prev => !prev)
@@ -41,8 +44,12 @@ function TaskListItem({ task, setUpdate, listType }) {
 
     }
 
+    const onListItemClick = (event) => {
+        setdisplayedTask(task);
+    }
+
     return (
-        <div className="task-item">
+        <div className="task-item" onClick={onListItemClick}>
             {listType != ListTypes.HISTORY ? (
                 <div className="task-checkbox" onClick={onCompleteTask}>
                     <FontAwesomeIcon icon={solidCircle} className="circle-icon" />

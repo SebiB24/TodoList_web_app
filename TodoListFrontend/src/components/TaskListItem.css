@@ -8,6 +8,10 @@
     margin-bottom: 8px; 
 }
 
+.task-item:hover{
+    cursor: pointer;
+}
+
 .task-checkbox {
     margin-top: 2px;
 }
