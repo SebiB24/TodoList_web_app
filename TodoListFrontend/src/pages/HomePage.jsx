@@ -6,7 +6,7 @@ import { Task, TaskStatus } from "../models/Task"
 import { AddTaskButton, AddTaskForm } from "../components/AddTask"
 import UserProfile from "../components/UserProfile"
 
-function HomePage({ userData }) {
+function HomePage({ userData, setUserData }) {
 
   const [listFilters, setListFilters] = useState({
     status: TaskStatus.TODO,
@@ -54,7 +54,7 @@ function HomePage({ userData }) {
 
   return (
     <div className="home-page-layout">
-      <SideMenu userData={userData} changeFilters={setListFilters} setShowUserProfile={setShowUserProfile} />
+      <SideMenu userData={userData} setUserData={setUserData} changeFilters={setListFilters} setShowUserProfile={setShowUserProfile} />
       <div className="main-content">
         <TaskList filters={listFilters} update={update} setUpdate={setUpdate}/>
       </div>

@@ -1,4 +1,5 @@
 import api from "./axiosConfig";
+import { User } from "../models/User"
 
 const ApiService = {
     register: async (userData) => {
@@ -21,7 +22,7 @@ const ApiService = {
     },
 
     logout: async () => {
-        try{
+        try {
             const response = await api.post('/auth/logout');
             localStorage.removeItem('token');
             localStorage.removeItem('userData');
@@ -31,7 +32,20 @@ const ApiService = {
         }
     },
 
-// TASKS ----------------------------------------------------------------------------------------------------
+    updateUserData: async () => {
+        const response = await api.get('/auth/me')
+        const responseUserData = response.data
+        const userData = new User(
+            responseUserData.name,
+            responseUserData.email,
+            responseUserData.userType,
+            responseUserData.score
+        )
+        localStorage.setItem('userData', JSON.stringify(userData));
+        return responseUserData;
+    },
+
+    // TASKS ----------------------------------------------------------------------------------------------------
 
     loadTasks: async (filters) => {
         try {
@@ -51,10 +65,10 @@ const ApiService = {
         }
     },
 
-    completeTask: async(taskId) =>{
-        try{
+    completeTask: async (taskId) => {
+        try {
             const response = await api.put(`/tasks/${taskId}/complete`);
-        }catch(error){
+        } catch (error) {
             throw error;
         }
     }

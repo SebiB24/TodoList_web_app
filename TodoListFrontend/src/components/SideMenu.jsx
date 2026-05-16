@@ -6,11 +6,12 @@ import { faUser, faCalendar } from '@fortawesome/free-regular-svg-icons'
 import { TaskStatus } from '../models/Task'
 
 import './SideMenu.css'
+import ApiService from '../api/ApiService'
 
-function SideMenu({ userData, changeFilters, setShowUserProfile }) {
+function SideMenu({ userData, setUserData, changeFilters, setShowUserProfile }) {
   let userName = userData.name
 
-  const[activeButton, setActiveButton] = useState('all')
+  const [activeButton, setActiveButton] = useState('all')
 
 
   const handleAllTasksClick = () => {
@@ -37,10 +38,20 @@ function SideMenu({ userData, changeFilters, setShowUserProfile }) {
     })
   }
 
+  const handleProfileClick = async () => {
+    try {
+      const userData = await ApiService.updateUserData();
+      setUserData(userData);
+      setShowUserProfile(true);
+    } catch(error){
+      console.error("Update user data error:" + error)
+    }
+  }
+
   return (
 
     <div className="sidebar">
-      <div className="user-profile" onClick={() => setShowUserProfile(true)}>
+      <div className="user-profile" onClick={handleProfileClick}>
         <div className="avatar-container">
           <FontAwesomeIcon icon={faUser} />
         </div>

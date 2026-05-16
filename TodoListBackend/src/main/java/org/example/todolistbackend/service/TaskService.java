@@ -7,6 +7,7 @@ import org.example.todolistbackend.model.Task;
 import org.example.todolistbackend.model.User;
 import org.example.todolistbackend.model.enums.TaskStatus;
 import org.example.todolistbackend.repository.ITasksRepo;
+import org.example.todolistbackend.repository.IUsersRepo;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +19,7 @@ import java.util.List;
 @Transactional
 public class TaskService {
     private final ITasksRepo tasksRepo;
+    private final IUsersRepo usersRepo;
 
     public void createTask(CreateTaskDTO createTaskDto, User user){
         Task task = new Task();
@@ -29,8 +31,8 @@ public class TaskService {
         task.setUser(user);
 
         tasksRepo.save(task);
-
     }
+
 
     public List<Task> getTasks(TaskStatus status, boolean today, User user){
         if(today){
@@ -40,9 +42,12 @@ public class TaskService {
         return tasksRepo.findTasksByUserAndStatus(user, status);
     }
 
+
     public Task completeTask(Integer taskId, User user){
         Task task = tasksRepo.findTaskById(taskId);
         task.setStatus(TaskStatus.COMPLETE);
+        user.increaseScore();
+        usersRepo.save(user);
         return task;
     }
 }

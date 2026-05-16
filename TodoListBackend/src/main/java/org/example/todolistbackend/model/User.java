@@ -104,6 +104,10 @@ public class User {
         this.tasks = tasks;
     }
 
+    public void increaseScore(){
+        this.score += 10;
+    }
+
 
 
 }

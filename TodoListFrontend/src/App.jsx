@@ -27,7 +27,7 @@ function App() {
         <Route path="/" element={<LoginPage onloginSuccess={setUserData} />} />
         <Route path="/login" element={<LoginPage onloginSuccess={setUserData} />} />
         <Route path="/register" element={<RegisterPage />} />
-        <Route path="/home" element={<HomePage userData={userData} />} />
+        <Route path="/home" element={<HomePage userData={userData} setUserData={setUserData}/>} />
       </Routes>
     </div>
   )
