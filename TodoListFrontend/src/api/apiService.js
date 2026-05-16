@@ -71,6 +71,14 @@ const ApiService = {
         } catch (error) {
             throw error;
         }
+    },
+
+    undoTask: async (taskId) => {
+        try {
+            const response = await api.put(`/tasks/${taskId}/undo`);
+        } catch (error) {
+            throw error;
+        }
     }
 };
 

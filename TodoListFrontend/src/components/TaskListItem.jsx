@@ -26,20 +26,33 @@ function TaskListItem({ task, setUpdate, listType }) {
             await ApiService.completeTask(task.id)
             setUpdate(prev => !prev)
         } catch (error) {
-            console.log(error)
+            console.error("Error completing the task:" + error)
+        }
+
+    }
+
+    const onUndoTask = async (event) => {
+        try {
+            await ApiService.undoTask(task.id)
+            setUpdate(prev => !prev)
+        } catch (error) {
+            console.error("Error undoing task complete:" + error)
         }
 
     }
 
     return (
         <div className="task-item">
-            <div className="task-checkbox" onClick={onCompleteTask}>
-                {listType != ListTypes.HISTORY ? (
+            {listType != ListTypes.HISTORY ? (
+                <div className="task-checkbox" onClick={onCompleteTask}>
                     <FontAwesomeIcon icon={solidCircle} className="circle-icon" />
-                ) : (
+                </div>
+
+            ) : (
+                <div className="task-checkbox" onClick={onUndoTask}>
                     <FontAwesomeIcon icon={faRotateBack} className="undo-icon" />
-                )}
-            </div>
+                </div>
+            )}
 
             <div className="task-content">
                 <span className="task-title">{task.name}</span>

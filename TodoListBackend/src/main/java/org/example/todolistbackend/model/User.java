@@ -108,6 +108,10 @@ public class User {
         this.score += 10;
     }
 
+    public void reduceScore(){
+        this.score -= 10;
+    }
+
 
 
 }

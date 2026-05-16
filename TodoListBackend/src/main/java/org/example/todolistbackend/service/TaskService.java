@@ -50,4 +50,12 @@ public class TaskService {
         usersRepo.save(user);
         return task;
     }
+
+    public Task undoTask(Integer taskId, User user){
+        Task task = tasksRepo.findTaskById(taskId);
+        task.setStatus(TaskStatus.TODO);
+        user.reduceScore();
+        usersRepo.save(user);
+        return task;
+    }
 }

@@ -15,7 +15,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -28,6 +27,15 @@ public class TaskController {
             @PathVariable Integer taskId,
             @AuthenticationPrincipal User user){
         Task task = taskService.completeTask(taskId, user);
+        TaskDTO taskDto = TaskMapper.taskToTaskDTO(task);
+        return ResponseEntity.status(HttpStatus.OK).body(taskDto);
+    }
+
+    @PutMapping(path = "/{taskId}/undo")
+    public ResponseEntity<TaskDTO> undoTask(
+            @PathVariable Integer taskId,
+            @AuthenticationPrincipal User user){
+        Task task = taskService.undoTask(taskId, user);
         TaskDTO taskDto = TaskMapper.taskToTaskDTO(task);
         return ResponseEntity.status(HttpStatus.OK).body(taskDto);
     }
