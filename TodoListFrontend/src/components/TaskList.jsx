@@ -89,7 +89,7 @@ function TaskList({ filters, update, setUpdate }) {
             {displayedTask && (
                 <div className="detail-popup-overlay">
                     <div ref={detailRef}>
-                        <TaskDetail task={displayedTask}></TaskDetail>
+                        <TaskDetail task={displayedTask} setdisplayedTask={setdisplayedTask} setUpdate={setUpdate}></TaskDetail>
                     </div>
                 </div>
             )}

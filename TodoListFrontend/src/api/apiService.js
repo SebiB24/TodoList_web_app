@@ -79,6 +79,14 @@ const ApiService = {
         } catch (error) {
             throw error;
         }
+    },
+
+    deleteTask: async (taskId) => {
+        try{
+            await api.delete(`/tasks/${taskId}/delete`);
+        } catch (error){
+            throw error;
+        }
     }
 };
 
