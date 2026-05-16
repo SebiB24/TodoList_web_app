@@ -65,8 +65,8 @@
     color: #000000;
 }
 
-.status-badge {
-    background-color: #000000;
+.status-badge,
+.status-badge-todo {
     color: #ffffff;
     padding: 4px 10px;
     border-radius: 4px;
@@ -75,8 +75,16 @@
     width: fit-content;
 }
 
+.status-badge {
+    background-color: #53af0d;
+}
+
+.status-badge-todo {
+    background-color: #e3b828;
+}
+
 .daily-badge {
-    color: #0056b3;
+    color: #3a1089;
     font-weight: bold;
     font-size: 0.9rem;
     display: flex;
@@ -118,8 +126,8 @@
     transition: background-color 0.2s ease;
 }
 
-.complete-btn:hover{
-    background-color: #50c411;
+.complete-btn:hover {
+    background-color: #549a0d;
 }
 
 .edit-btn:hover {
@@ -142,4 +150,38 @@
 .delete-btn:hover {
     background-color: #e63946;
     color: #ffffff;
+}
+
+
+
+/* --- Edit Mode Inputs  --- */
+.edit-input {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #d1d1d1;
+    border-radius: 8px;
+    background-color: #fcfcfc;
+    font-family: inherit;
+    color: #000000;
+    transition: all 0.2s ease;
+    outline: none;
+    width: 100%;
+    padding: 5px;
+}
+
+.edit-input:focus {
+    border-color: #000000;
+    background-color: #ffffff;
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05);
+}
+
+textarea.edit-input {
+    resize: vertical;
+    line-height: 1.5;
+}
+
+select.edit-input,
+input[type="date"].edit-input {
+    cursor: pointer;
 }

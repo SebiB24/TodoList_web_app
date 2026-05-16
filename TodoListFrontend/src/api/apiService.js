@@ -81,10 +81,19 @@ const ApiService = {
         }
     },
 
+    updateTask: async (taskId, updateTaskDto) => {
+        try {
+            const response = await api.put(`/tasks/${taskId}/update`, updateTaskDto);
+            return response.data;
+        } catch (error) {
+            throw error;
+        }
+    },
+
     deleteTask: async (taskId) => {
-        try{
+        try {
             await api.delete(`/tasks/${taskId}/delete`);
-        } catch (error){
+        } catch (error) {
             throw error;
         }
     }

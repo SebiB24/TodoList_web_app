@@ -27,7 +27,7 @@
 }
 
 .task-checkbox-check:hover {
-    background-color: rgb(22, 155, 22);
+    background-color: #549a0d;
 }
 
 .task-checkbox-undo:hover {
@@ -98,7 +98,7 @@
 }
 
 .task-date.today {
-    color: #4ec62a;
+    color: #74cf58;
 }
 
 .task-date.upcoming {
