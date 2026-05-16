@@ -12,7 +12,7 @@
     margin-top: 2px;
 }
 
-.circle-icon {
+.circle-icon, .undo-icon {
     color: #888888;     
     font-size: 1.1rem;
     cursor: pointer;
@@ -20,7 +20,18 @@
 }
 
 .circle-icon:hover {
-    color: #4b5563; 
+    color: #689245; 
+}
+
+@keyframes spinCycle {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(-90deg); }
+}
+
+.undo-icon:hover {
+    color: #7b2c2c; 
+    animation: spinCycle .2s linear;
+    transform: rotate(-90deg);
 }
 
 .task-content {

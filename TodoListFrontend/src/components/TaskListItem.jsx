@@ -1,12 +1,15 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faCircle as solidCircle, faArrowsRotate } from '@fortawesome/free-solid-svg-icons';
 import { faCalendar } from '@fortawesome/free-regular-svg-icons';
+import { faRotateBack } from "@fortawesome/free-solid-svg-icons";
 import { isTaskDueToday, isTaskPastDue } from "../models/Task";
 import "./TaskListItem.css"
 import { useEffect, useState } from "react";
 import ApiService from "../api/apiService";
+import { ListTypes } from "./TaskList";
 
-function TaskListItem({ task, setUpdate }) {
+
+function TaskListItem({ task, setUpdate, listType }) {
 
     const [taskDueStatus, setTaskDueStatus] = useState(() => {
         if (isTaskDueToday(task)) {
@@ -22,32 +25,37 @@ function TaskListItem({ task, setUpdate }) {
         try {
             await ApiService.completeTask(task.id)
             setUpdate(prev => !prev)
-        }catch(error){
+        } catch (error) {
             console.log(error)
         }
-        
+
     }
 
     return (
         <div className="task-item">
             <div className="task-checkbox" onClick={onCompleteTask}>
-                <FontAwesomeIcon icon={solidCircle} className="circle-icon" />
+                {listType != ListTypes.HISTORY ? (
+                    <FontAwesomeIcon icon={solidCircle} className="circle-icon" />
+                ) : (
+                    <FontAwesomeIcon icon={faRotateBack} className="undo-icon" />
+                )}
             </div>
 
             <div className="task-content">
                 <span className="task-title">{task.name}</span>
-
-                <div className="task-meta">
-                    <span className={`task-date ${taskDueStatus}`}>
-                        <p><FontAwesomeIcon icon={faCalendar} /> {taskDueStatus}</p>
-                    </span>
-                    {task.daily && (
-                        <span className="task-recurring">
-                            <FontAwesomeIcon icon={faArrowsRotate} />
-                            Recurring
+                {listType != ListTypes.HISTORY &&
+                    <div className="task-meta">
+                        <span className={`task-date ${taskDueStatus}`}>
+                            <p><FontAwesomeIcon icon={faCalendar} /> {taskDueStatus}</p>
                         </span>
-                    )}
-                </div>
+                        {task.daily && (
+                            <span className="task-recurring">
+                                <FontAwesomeIcon icon={faArrowsRotate} />
+                                Recurring
+                            </span>
+                        )}
+                    </div>
+                }
             </div>
         </div>
     )
