@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faCircle as solidCircle, faArrowsRotate } from '@fortawesome/free-solid-svg-icons';
+import { faArrowsRotate } from '@fortawesome/free-solid-svg-icons';
 import { faCalendar } from '@fortawesome/free-regular-svg-icons';
-import { faRotateBack } from "@fortawesome/free-solid-svg-icons";
+import { faRotateBack, faCheck } from "@fortawesome/free-solid-svg-icons";
 import { isTaskDueToday, isTaskPastDue } from "../models/Task";
 import "./TaskListItem.css"
 import { useEffect, useState } from "react";
@@ -51,12 +51,12 @@ function TaskListItem({ task, setUpdate, listType, setdisplayedTask }) {
     return (
         <div className="task-item" onClick={onListItemClick}>
             {listType != ListTypes.HISTORY ? (
-                <div className="task-checkbox" onClick={onCompleteTask}>
-                    <FontAwesomeIcon icon={solidCircle} className="circle-icon" />
+                <div className="task-checkbox-check" onClick={onCompleteTask}>
+                    <FontAwesomeIcon icon={faCheck} className="check-icon"></FontAwesomeIcon>
                 </div>
 
             ) : (
-                <div className="task-checkbox" onClick={onUndoTask}>
+                <div className="task-checkbox-undo" onClick={onUndoTask}>
                     <FontAwesomeIcon icon={faRotateBack} className="undo-icon" />
                 </div>
             )}
