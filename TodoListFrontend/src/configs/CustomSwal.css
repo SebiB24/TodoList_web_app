@@ -1,0 +1,45 @@
+.my-swal-popup {
+    border-radius: 7px !important;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1) !important;
+    padding: 15px !important;
+}
+
+.my-swal-title {
+    font-size: 1.4rem !important;
+    font-weight: 700 !important;
+}
+
+.my-swal-actions {
+    gap: 12px;
+    margin-top: 24px !important;
+}
+
+.my-swal-btn {
+    padding: 10px 20px;
+    border-radius: 8px; 
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+}
+
+.btn-confirm {
+    background-color: #e63946; 
+    color: white;
+}
+
+.btn-confirm:hover {
+    background-color: #dc2626;
+    transform: translateY(-1px);
+}
+
+.btn-cancel {
+    background-color: #f3f4f6;
+    color: #4b5563;
+}
+
+.btn-cancel:hover {
+    background-color: #e5e7eb;
+    color: #111827;
+}

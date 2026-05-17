@@ -5,6 +5,7 @@ import { UserType } from '../models/User';
 import toast from 'react-hot-toast';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserMinus, faUserShield } from '@fortawesome/free-solid-svg-icons';
+import CustomSwal from '../configs/CustomSwal';
 
 export const UserListItem = ({ user, onPromote, onRemove }) => {
     return (
@@ -62,21 +63,50 @@ export const UserList = () => {
     }, [update]);
 
     const onPromote = async (userId) => {
-        await ApiService.promoteUser(userId)
-        setUpdate(prev => !prev)
-        toast.success(`User ${userId} promoted to Admin`, {
-            icon: <FontAwesomeIcon icon={faUserShield} style={{ color: '#8b5cf6' }} />,
-        });
-
+        CustomSwal.fire(
+            {
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                showCancelButton: true,
+                confirmButtonText: `Yes, promote user:${userId}!`,
+                customClass: {
+                    popup: 'my-swal-popup',
+                    title: 'my-swal-title',
+                    actions: 'my-swal-actions',
+                    cancelButton: 'my-swal-btn btn-cancel',
+                    confirmButton: 'my-swal-btn btn-promote-swal'
+                }
+            }
+        ).then(async (result) => {
+            if (result.isConfirmed) {
+                await ApiService.promoteUser(userId)
+                setUpdate(prev => !prev)
+                toast.success(`User ${userId} promoted to Admin`, {
+                    icon: <FontAwesomeIcon icon={faUserShield} style={{ color: '#8b5cf6' }} />,
+                });
+            }
+        })
     }
 
     const onRemove = async (userId) => {
-        await ApiService.removeUser(userId)
-        setUpdate(prev => !prev)
+        CustomSwal.fire(
+            {
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                showCancelButton: true,
+                confirmButtonText: `Yes, remove user:${userId}!`
+            }
+        ).then(async (result) => {
+            if (result.isConfirmed) {
+                await ApiService.removeUser(userId)
+                setUpdate(prev => !prev)
 
-        toast.success(`User ${userId} removed`, {
-            icon: <FontAwesomeIcon icon={faUserMinus} style={{ color: '#c62828' }} />,
-        });
+                toast.success(`User:${userId} removed`, {
+                    icon: <FontAwesomeIcon icon={faUserMinus} style={{ color: '#c62828' }} />,
+                });
+            }
+        })
+
     }
 
     if (!users || users.length === 0) {

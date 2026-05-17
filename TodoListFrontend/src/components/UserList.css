@@ -107,12 +107,12 @@
 }
 
 .btn-promote {
-    color: #1565c0;
-    border: 1px solid #1565c0;
+    color: #8b5cf6;
+    border: 1px solid #8b5cf6;
 }
 
 .btn-promote:hover {
-    background-color: #1565c0;
+    background-color: #8b5cf6;
     color: #ffffff;
 }
 
@@ -124,4 +124,15 @@
 .btn-remove:hover {
     background-color: #c62828;
     color: #ffffff;
+}
+
+
+.btn-promote-swal {
+    background-color: #8b5cf6; 
+    color: white;
+}
+
+.btn-promote-swal:hover {
+    background-color: #7c3aed;
+    transform: translateY(-1px);
 }

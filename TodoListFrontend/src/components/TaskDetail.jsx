@@ -6,6 +6,8 @@ import ApiService from '../api/apiService';
 import { useState, useRef } from 'react';
 import toast from 'react-hot-toast';
 
+import CustomSwal from '../configs/CustomSwal';
+
 const TaskDetail = ({ task, setdisplayedTask, setUpdate }) => {
 
     const [editMode, setEditMode] = useState(false)
@@ -17,18 +19,29 @@ const TaskDetail = ({ task, setdisplayedTask, setUpdate }) => {
     const dailyRef = useRef(null)
 
     const onDeleteTask = async () => {
-        try {
-            await ApiService.deleteTask(task.id)
-            setUpdate(prev => !prev)
-            setdisplayedTask(null)
-            
-            toast.success(`Deleted: ${task.name}`, {
-                icon: <FontAwesomeIcon icon={faTrash} style={{ color: '#ef4444' }} />,
-            });
+        CustomSwal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete!'
+        }).then( async (result) => {
+            if (result.isConfirmed) {
 
-        } catch (error) {
-            console.error(error)
-        }
+                try {
+                    await ApiService.deleteTask(task.id)
+                    setUpdate(prev => !prev)
+                    setdisplayedTask(null)
+
+                    toast.success(`Deleted: ${task.name}`, {
+                        icon: <FontAwesomeIcon icon={faTrash} style={{ color: '#ef4444' }} />,
+                    });
+
+                } catch (error) {
+                    console.error(error)
+                }
+            }
+        })
+
     }
 
 
@@ -53,7 +66,7 @@ const TaskDetail = ({ task, setdisplayedTask, setUpdate }) => {
                 daily: dailyRef.current.checked,
                 dueDate: dueDateRef.current.value
             }
-            if(!nameRef.current.value)
+            if (!nameRef.current.value)
                 throw error("A task needs to have a name");
             await ApiService.updateTask(task.id, updateTaskDto)
             setUpdate(prev => !prev)

@@ -16,7 +16,7 @@ function TaskList({ filters, update, setUpdate }) {
     const [tasks, setTasks] = useState([]);
     const [title, setTitle] = useState("All Tasks");
     const [listType, setListType] = useState(ListTypes.ALL);
-    const [displayedTask, setdisplayedTask ] = useState(null);
+    const [displayedTask, setdisplayedTask] = useState(null);
 
     const detailRef = useRef(null)
 
@@ -45,7 +45,8 @@ function TaskList({ filters, update, setUpdate }) {
 
     useEffect(() => {
         const handleClickOutside = (event) => {
-            if (detailRef.current && !detailRef.current.contains(event.target)) {
+            const isClickInsideSwal = event.target.closest('.swal2-container');
+            if (detailRef.current && !detailRef.current.contains(event.target) && !isClickInsideSwal) {
                 setdisplayedTask(null)
             }
         }
@@ -113,7 +114,7 @@ function TaskList({ filters, update, setUpdate }) {
                     <div className="task-group">
                         {
                             priority2Tasks.map((task, index) => (
-                                <TaskListItem key={index} task={task} listType={listType} setUpdate={setUpdate} setdisplayedTask={setdisplayedTask}/>
+                                <TaskListItem key={index} task={task} listType={listType} setUpdate={setUpdate} setdisplayedTask={setdisplayedTask} />
                             ))
                         }
                     </div>
@@ -125,7 +126,7 @@ function TaskList({ filters, update, setUpdate }) {
                     <div className="task-group">
                         {
                             priority3Tasks.map((task, index) => (
-                                <TaskListItem key={index} task={task} listType={listType} setUpdate={setUpdate} setdisplayedTask={setdisplayedTask}/>
+                                <TaskListItem key={index} task={task} listType={listType} setUpdate={setUpdate} setdisplayedTask={setdisplayedTask} />
                             ))
                         }
                     </div>

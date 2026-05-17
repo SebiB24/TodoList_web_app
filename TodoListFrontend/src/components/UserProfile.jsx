@@ -5,18 +5,30 @@ import "./UserProfile.css"
 import { useNavigate } from 'react-router-dom'
 import ApiService from "../api/ApiService"
 import toast from "react-hot-toast"
+import CustomSwal from "../configs/CustomSwal"
 
 const UserProfile = ({ userData }) => {
 
     const navigate = useNavigate()
 
     const handleLogout = async () => {
-        const response = await ApiService.logout()
-        navigate('/login')
 
-        toast.success("Logged out successfully", {
-            icon: <FontAwesomeIcon icon={faRightFromBracket} style={{ color: '#64748b' }} />,
-        });
+        CustomSwal.fire({
+            title: 'Are you sure?',
+            text: 'You will be directed back to the login screen',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, logout!'
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                const response = await ApiService.logout()
+                navigate('/login')
+
+                toast.success("Logged out successfully", {
+                    icon: <FontAwesomeIcon icon={faRightFromBracket} style={{ color: '#64748b' }} />,
+                });
+            }
+        })
+
     }
 
     return (

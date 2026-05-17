@@ -41,7 +41,8 @@ function HomePage({ userData, setUserData }) {
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (profileRef.current && !profileRef.current.contains(event.target)) {
+      const isClickInsideSwal = event.target.closest('.swal2-container');
+      if (profileRef.current && !profileRef.current.contains(event.target) && !isClickInsideSwal) {
         setShowUserProfile(false)
       }
     }
