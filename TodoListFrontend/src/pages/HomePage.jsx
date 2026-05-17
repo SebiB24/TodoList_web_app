@@ -5,6 +5,7 @@ import { useState, useEffect, useRef } from "react"
 import { Task, TaskStatus } from "../models/Task"
 import { AddTaskButton, AddTaskForm } from "../components/AddTask"
 import UserProfile from "../components/UserProfile"
+import { UserList } from "../components/UserList"
 
 function HomePage({ userData, setUserData }) {
 
@@ -15,6 +16,7 @@ function HomePage({ userData, setUserData }) {
   const [showCreateTaskForm, setShowCreateTaskForm] = useState(false)
   const [showUserProfile, setShowUserProfile] = useState(false)
   const [update, setUpdate] = useState(false)
+  const [showAdmin, setShowAdmin] = useState(false)
 
 
   const formRef = useRef(null)
@@ -54,16 +56,26 @@ function HomePage({ userData, setUserData }) {
 
   return (
     <div className="home-page-layout">
-      <SideMenu userData={userData} setUserData={setUserData} changeFilters={setListFilters} setShowUserProfile={setShowUserProfile} />
+      <SideMenu userData={userData} setUserData={setUserData} changeFilters={setListFilters} setShowUserProfile={setShowUserProfile} setShowAdmin={setShowAdmin} />
       <div className="main-content">
-        <TaskList filters={listFilters} update={update} setUpdate={setUpdate}/>
+        {showAdmin ? (
+          <UserList></UserList>
+        ) : (
+          <>
+            <TaskList filters={listFilters} update={update} setUpdate={setUpdate} />
+            {!showCreateTaskForm &&
+              <AddTaskButton onClick={() => setShowCreateTaskForm(true)} />
+            }
+          </>
+        )
+        }
       </div>
-      {!showCreateTaskForm && <AddTaskButton onClick={() => setShowCreateTaskForm(true)} />}
       {showCreateTaskForm &&
         <div className="popup-overlay" ref={formRef} >
           <AddTaskForm setShowCreateTaskForm={setShowCreateTaskForm} setUpdate={setUpdate} />
         </div>
       }
+
       {showUserProfile &&
 
         <div className="profile-popup-overlay" >

@@ -7,14 +7,15 @@ import { TaskStatus } from '../models/Task'
 
 import './SideMenu.css'
 import ApiService from '../api/ApiService'
+import { UserType } from '../models/User'
 
-function SideMenu({ userData, setUserData, changeFilters, setShowUserProfile }) {
-  let userName = userData.name
+function SideMenu({ userData, setUserData, changeFilters, setShowUserProfile, setShowAdmin }) {
 
   const [activeButton, setActiveButton] = useState('all')
 
 
   const handleAllTasksClick = () => {
+    setShowAdmin(false);
     setActiveButton('all')
     changeFilters({
       status: TaskStatus.TODO,
@@ -23,6 +24,7 @@ function SideMenu({ userData, setUserData, changeFilters, setShowUserProfile }) 
   }
 
   const handleTodayClick = () => {
+    setShowAdmin(false);
     setActiveButton('today')
     changeFilters({
       status: TaskStatus.TODO,
@@ -31,6 +33,7 @@ function SideMenu({ userData, setUserData, changeFilters, setShowUserProfile }) 
   }
 
   const handleHistoryClick = () => {
+    setShowAdmin(false);
     setActiveButton('history')
     changeFilters({
       status: TaskStatus.COMPLETE,
@@ -43,9 +46,14 @@ function SideMenu({ userData, setUserData, changeFilters, setShowUserProfile }) 
       const userData = await ApiService.updateUserData();
       setUserData(userData);
       setShowUserProfile(true);
-    } catch(error){
+    } catch (error) {
       console.error("Update user data error:" + error)
     }
+  }
+
+  const handleUsersClick = () => {
+      setActiveButton('users');
+      setShowAdmin(true);
   }
 
   return (
@@ -55,7 +63,7 @@ function SideMenu({ userData, setUserData, changeFilters, setShowUserProfile }) 
         <div className="avatar-container">
           <FontAwesomeIcon icon={faUser} />
         </div>
-        <h2 className="user-name">{userName}</h2>
+        <h2 className="user-name">{userData.name}</h2>
       </div>
 
       <nav className="nav-menu">
@@ -73,6 +81,13 @@ function SideMenu({ userData, setUserData, changeFilters, setShowUserProfile }) 
           <FontAwesomeIcon icon={faClockRotateLeft} />
           <span className="menu-text">History</span>
         </label>
+
+        {userData.type == UserType.ADMIN &&
+          <label onClick={handleUsersClick} className={`menu-item ${activeButton === 'users' ? 'active' : ''}`}>
+            <FontAwesomeIcon icon={faUser} />
+            <span className="menu-text">Users</span>
+          </label>
+        }
       </nav>
     </div>
   )

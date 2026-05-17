@@ -2,6 +2,7 @@ import api from "./axiosConfig";
 import { User } from "../models/User"
 
 const ApiService = {
+    
     register: async (userData) => {
         try {
             const response = await api.post('/auth/register', userData);
@@ -94,6 +95,16 @@ const ApiService = {
         try {
             await api.delete(`/tasks/${taskId}/delete`);
         } catch (error) {
+            throw error;
+        }
+    },
+    // ADMIN ----------------------------------------------------------------------------------------------------
+
+    loadUsers: async () => {
+        try{
+            const response = api.get("/admin/users");
+            return (await response).data;
+        }catch(error){
             throw error;
         }
     }
