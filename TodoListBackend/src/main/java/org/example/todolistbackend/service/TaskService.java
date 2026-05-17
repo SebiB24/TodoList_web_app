@@ -45,12 +45,29 @@ public class TaskService {
         return tasksRepo.findTasksByUserAndStatus(user, status);
     }
 
+    private void createNextDayTask(Task task){
+        Task newTask = new Task();
+        newTask.setName(task.getName());
+        newTask.setPriority(task.getPriority());
+        newTask.setDescription(task.getDescription());
+        newTask.setDueDate(task.getDueDate().plusDays(1));
+        newTask.setDaily(task.isDaily());
+        newTask.setUser(task.getUser());
+        tasksRepo.save(newTask);
+    }
 
     public Task completeTask(Integer taskId, User user){
         Task task = tasksRepo.findTaskById(taskId);
         task.setStatus(TaskStatus.COMPLETE);
+
+        if(task.isDaily()) {
+            createNextDayTask(task);
+            task.setDaily(false);
+        }
+
         user.increaseScore();
         usersRepo.save(user);
+
         return task;
     }
 
