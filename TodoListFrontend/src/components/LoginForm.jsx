@@ -4,12 +4,13 @@ import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import ApiService from '../api/ApiService'
 import { User } from '../models/User'
+import toast from 'react-hot-toast'
 
 function LoginForm({ onloginSuccess }) {
 
     const navigate = useNavigate()
 
-    const[errorMsg, setErrorMsg] = useState('')
+    const [errorMsg, setErrorMsg] = useState('')
 
     const handleSubmit = async (event) => {
         event.preventDefault()
@@ -22,22 +23,31 @@ function LoginForm({ onloginSuccess }) {
             password: formData.get('password')
         }
 
-        try{
+        try {
             const response = await ApiService.login(loginData)
             const responseUserData = response.user
             const userData = new User(
-                responseUserData.name, 
-                responseUserData.email, 
-                responseUserData.userType, 
+                responseUserData.name,
+                responseUserData.email,
+                responseUserData.userType,
                 responseUserData.score
             )
             localStorage.setItem('userData', JSON.stringify(userData))
             onloginSuccess(userData)
             navigate('/home')
+            
+            toast.success("Signed in successfully", {
+                iconTheme: {
+                    primary: '#7d1111', 
+                    secondary: '#f3f4f6',
+                },
+            });
 
-        }catch(error){
-            console.error('Login error:', error)
-            setErrorMsg('Invalid email or password.')
+        } catch (error) {
+            console.error('Login error:', error);
+            await setErrorMsg('Invalid email or password.');
+
+            toast.error(errorMsg);
         }
 
     }

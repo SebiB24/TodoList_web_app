@@ -4,6 +4,7 @@ import "./AddTask.css"
 import { TaskPriority } from "../models/Task"
 import ApiService from "../api/ApiService"
 import { CreateTaskDTO } from "../models/Task"
+import toast from "react-hot-toast"
 
 export const AddTaskButton = ({ onClick }) => {
     return (
@@ -28,6 +29,10 @@ export const AddTaskForm = ({ setShowCreateTaskForm, setUpdate }) => {
         await ApiService.createTask(taskData)
         setShowCreateTaskForm(false)
         setUpdate(prev => !prev)
+
+        toast.success(`Created: ${formData.name}`, {
+            icon: <FontAwesomeIcon icon={faPlus} style={{ color: '#991b1b' }} />,
+        });
     }
 
     return (

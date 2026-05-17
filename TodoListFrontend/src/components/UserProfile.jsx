@@ -4,6 +4,7 @@ import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons"
 import "./UserProfile.css"
 import { useNavigate } from 'react-router-dom'
 import ApiService from "../api/ApiService"
+import toast from "react-hot-toast"
 
 const UserProfile = ({ userData }) => {
 
@@ -12,6 +13,10 @@ const UserProfile = ({ userData }) => {
     const handleLogout = async () => {
         const response = await ApiService.logout()
         navigate('/login')
+
+        toast.success("Logged out successfully", {
+            icon: <FontAwesomeIcon icon={faRightFromBracket} style={{ color: '#64748b' }} />,
+        });
     }
 
     return (

@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react';
 import './UserList.css';
 import ApiService from "../api/ApiService";
 import { UserType } from '../models/User';
+import toast from 'react-hot-toast';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUserMinus, faUserShield } from '@fortawesome/free-solid-svg-icons';
 
 export const UserListItem = ({ user, onPromote, onRemove }) => {
     return (
@@ -61,11 +64,19 @@ export const UserList = () => {
     const onPromote = async (userId) => {
         await ApiService.promoteUser(userId)
         setUpdate(prev => !prev)
+        toast.success(`User ${userId} promoted to Admin`, {
+            icon: <FontAwesomeIcon icon={faUserShield} style={{ color: '#8b5cf6' }} />,
+        });
+
     }
 
     const onRemove = async (userId) => {
         await ApiService.removeUser(userId)
         setUpdate(prev => !prev)
+
+        toast.success(`User ${userId} removed`, {
+            icon: <FontAwesomeIcon icon={faUserMinus} style={{ color: '#c62828' }} />,
+        });
     }
 
     if (!users || users.length === 0) {

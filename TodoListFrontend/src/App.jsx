@@ -5,6 +5,7 @@ import { Routes } from 'react-router-dom'
 import LoginPage from './pages/LoginPage'
 import RegisterPage from './pages/RegisterPage'
 import HomePage from './pages/HomePage'
+import { Toaster } from 'react-hot-toast'
 
 
 function App() {
@@ -27,8 +28,13 @@ function App() {
         <Route path="/" element={<LoginPage onloginSuccess={setUserData} />} />
         <Route path="/login" element={<LoginPage onloginSuccess={setUserData} />} />
         <Route path="/register" element={<RegisterPage />} />
-        <Route path="/home" element={<HomePage userData={userData} setUserData={setUserData}/>} />
+        <Route path="/home" element={<HomePage userData={userData} setUserData={setUserData} />} />
       </Routes>
+      <div>
+        <Toaster
+          position="top-right"
+          reverseOrder={false} />
+      </div>
     </div>
   )
 }

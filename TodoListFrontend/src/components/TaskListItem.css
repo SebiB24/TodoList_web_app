@@ -6,11 +6,22 @@
     gap: 12px;
     margin-bottom: 8px;
     border-radius: 7px;
+    transition: box-shadow 0.2s ease, transform 0.1s ease;
 }
 
 .task-item:hover {
     cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
+
+.task-item:hover .task-checkbox-check {
+    transform: scale(1.2);
+}
+
+.task-item:hover .task-checkbox-undo{
+    transform: scale(1.2);
+}
+
 
 .task-checkbox-check,
 .task-checkbox-undo {
@@ -24,6 +35,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    transition: transform 0.2s ease;
 }
 
 .task-checkbox-check:hover {

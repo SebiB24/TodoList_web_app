@@ -3,17 +3,18 @@ import './RegisterForm.css'
 import ApiService from '../api/apiService'
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
+import toast from 'react-hot-toast'
 
 function RegisterForm() {
 
     const navigate = useNavigate()
 
-    const[errorMsg, setErrorMsg] = useState('')
+    const [errorMsg, setErrorMsg] = useState('')
 
     const handleSubmit = async (e) => {
         e.preventDefault()
         setErrorMsg('')
-        
+
         const formData = new FormData(e.target)
         const userData = {
             name: formData.get('name'),
@@ -23,6 +24,13 @@ function RegisterForm() {
         try {
             await ApiService.register(userData)
             navigate('/login')
+
+            toast.success("Registered successfully", {
+                iconTheme: {
+                    primary: '#000000',
+                    secondary: '#f3f4f6',
+                },
+            });
 
         } catch (error) {
             console.error('Registration error:', error)

@@ -4,6 +4,7 @@ import "./TaskDetail.css"
 import { TaskPriority, TaskStatus } from '../models/Task';
 import ApiService from '../api/apiService';
 import { useState, useRef } from 'react';
+import toast from 'react-hot-toast';
 
 const TaskDetail = ({ task, setdisplayedTask, setUpdate }) => {
 
@@ -20,6 +21,10 @@ const TaskDetail = ({ task, setdisplayedTask, setUpdate }) => {
             await ApiService.deleteTask(task.id)
             setUpdate(prev => !prev)
             setdisplayedTask(null)
+            
+            toast.success(`Deleted: ${task.name}`, {
+                icon: <FontAwesomeIcon icon={faTrash} style={{ color: '#ef4444' }} />,
+            });
 
         } catch (error) {
             console.error(error)
@@ -33,6 +38,7 @@ const TaskDetail = ({ task, setdisplayedTask, setUpdate }) => {
             await ApiService.completeTask(task.id)
             setUpdate(prev => !prev)
             setdisplayedTask(null)
+            toast.success(`${task.name}`)
         } catch (error) {
             console.error("Error completing the task:" + error)
         }
@@ -47,14 +53,21 @@ const TaskDetail = ({ task, setdisplayedTask, setUpdate }) => {
                 daily: dailyRef.current.checked,
                 dueDate: dueDateRef.current.value
             }
-            console.log(updateTaskDto)
+            if(!nameRef.current.value)
+                throw error("A task needs to have a name");
             await ApiService.updateTask(task.id, updateTaskDto)
             setUpdate(prev => !prev)
             const updateTask = { ...task, ...updateTaskDto } // spread operator (right overwrites left)
             setdisplayedTask(updateTask)
             setEditMode(false)
+
+            toast.success(`Saved: ${task.name}`, {
+                icon: <FontAwesomeIcon icon={faCheck} style={{ color: '#3b82f6' }} />,
+            });
+
         } catch (error) {
             console.error("Error updateing the task:" + error)
+            toast.error("Task needs to have a name")
         }
     }
 
@@ -87,7 +100,7 @@ const TaskDetail = ({ task, setdisplayedTask, setUpdate }) => {
                                 <span className="meta-label">Status</span>
                                 {task.status == TaskStatus.COMPLETE ?
                                     <span className="meta-value status-badge">{task.status}</span>
-                                :
+                                    :
                                     <span className="meta-value status-badge-todo">{task.status}</span>
                                 }
                             </div>
