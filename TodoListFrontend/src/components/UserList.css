@@ -88,3 +88,41 @@
     border-radius: 8px;
     border: 1px dashed #ccc;
 }
+
+.user-actions {
+    display: flex;
+    gap: 8px;
+    margin-left: 12px;
+    padding-left: 20px;
+    border-left: 1px solid #e0e0e0;
+}
+
+.btn-action {
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background-color: transparent;
+}
+
+.btn-promote {
+    color: #1565c0;
+    border: 1px solid #1565c0;
+}
+
+.btn-promote:hover {
+    background-color: #1565c0;
+    color: #ffffff;
+}
+
+.btn-remove {
+    color: #c62828;
+    border: 1px solid #c62828;
+}
+
+.btn-remove:hover {
+    background-color: #c62828;
+    color: #ffffff;
+}

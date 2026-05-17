@@ -25,4 +25,16 @@ public class AdminController {
         List<UserDTO> userDtos = users.stream().map(UserMapper::userToUserDTO).toList();
         return ResponseEntity.status(HttpStatus.OK).body(userDtos);
     }
+
+    @DeleteMapping(path = "/{userId}/remove")
+    public ResponseEntity<Void> removeUser(@PathVariable Integer userId, @AuthenticationPrincipal User user){
+        adminService.deleteUser(userId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @PutMapping(path = "/{userId}/promote")
+    public ResponseEntity<UserDTO> promoteUser(@PathVariable Integer userId, @AuthenticationPrincipal User user){
+        User promotedUser = adminService.promoteUser(userId);
+        return ResponseEntity.status(HttpStatus.OK).body(UserMapper.userToUserDTO(promotedUser));
+    }
 }

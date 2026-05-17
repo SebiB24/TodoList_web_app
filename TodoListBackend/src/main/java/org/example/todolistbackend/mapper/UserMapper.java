@@ -6,6 +6,7 @@ import org.example.todolistbackend.model.User;
 public class UserMapper {
     public static UserDTO userToUserDTO(User user){
         UserDTO userDto = new UserDTO();
+        userDto.setUserId(user.getId());
         userDto.setName(user.getName());
         userDto.setEmail(user.getEmail());
         userDto.setUserType(user.getUserType());

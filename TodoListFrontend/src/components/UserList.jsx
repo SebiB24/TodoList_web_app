@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import './UserList.css';
 import ApiService from "../api/ApiService";
+import { UserType } from '../models/User';
 
-export const UserListItem = ({user}) => {
-
+export const UserListItem = ({ user, onPromote, onRemove }) => {
     return (
         <div className="user-list-item">
             <div className="user-info">
@@ -16,6 +16,23 @@ export const UserListItem = ({user}) => {
                     {user.userType}
                 </span>
                 <span className="user-score">Score: {user.score}</span>
+                {user.userType !== UserType.ADMIN && (
+                    <div className="user-actions">
+                        <button
+                            className="btn-action btn-promote"
+                            onClick={() => onPromote(user.userId)}
+                        >
+                            Promote
+                        </button>
+                        <button
+                            className="btn-action btn-remove"
+                            onClick={() => onRemove(user.userId)}
+                        >
+                            Remove
+                        </button>
+                    </div>
+                )}
+
             </div>
         </div>
     );
@@ -41,6 +58,16 @@ export const UserList = () => {
         fetchUsers();
     }, [update]);
 
+    const onPromote = async (userId) => {
+        await ApiService.promoteUser(userId)
+        setUpdate(prev => !prev)
+    }
+
+    const onRemove = async (userId) => {
+        await ApiService.removeUser(userId)
+        setUpdate(prev => !prev)
+    }
+
     if (!users || users.length === 0) {
         return <div className="empty-state">No users found.</div>;
     }
@@ -51,7 +78,7 @@ export const UserList = () => {
 
             <div className="user-list">
                 {users.map((user, index) => (
-                    <UserListItem key={user.email} user={user} />
+                    <UserListItem key={user.email} user={user} onPromote={onPromote} onRemove={onRemove} />
                 ))}
             </div>
         </div>

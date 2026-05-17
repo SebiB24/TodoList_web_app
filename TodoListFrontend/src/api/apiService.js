@@ -102,8 +102,24 @@ const ApiService = {
 
     loadUsers: async () => {
         try{
-            const response = api.get("/admin/users");
-            return (await response).data;
+            const response = await api.get("/admin/users");
+            return response.data;
+        }catch(error){
+            throw error;
+        }
+    },
+
+    promoteUser: async (userId) => {
+        try{
+            const response = await api.put(`/admin/${userId}/promote`, {});
+        }catch(error){
+            throw error;
+        }
+    },
+
+    removeUser: async (userId) => {
+        try{
+            const response = await api.delete(`/admin/${userId}/remove`);
         }catch(error){
             throw error;
         }

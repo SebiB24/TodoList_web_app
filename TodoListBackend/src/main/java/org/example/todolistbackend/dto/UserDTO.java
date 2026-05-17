@@ -9,6 +9,7 @@ import org.example.todolistbackend.model.enums.UserType;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserDTO {
+    private Integer userId;
     private String name;
     private String email;
     private UserType userType;
