@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faInbox, faClockRotateLeft } from '@fortawesome/free-solid-svg-icons'
@@ -8,11 +8,11 @@ import { TaskStatus } from '../models/Task'
 import './SideMenu.css'
 import ApiService from '../api/ApiService'
 import { UserType } from '../models/User'
+import { User } from '../models/User'
 
 function SideMenu({ userData, setUserData, changeFilters, setShowUserProfile, setShowAdmin }) {
 
   const [activeButton, setActiveButton] = useState('all')
-
 
   const handleAllTasksClick = () => {
     setShowAdmin(false);
@@ -43,8 +43,14 @@ function SideMenu({ userData, setUserData, changeFilters, setShowUserProfile, se
 
   const handleProfileClick = async () => {
     try {
-      const userData = await ApiService.updateUserData();
-      setUserData(userData);
+      const response = await ApiService.updateUserData();
+      const newData = new User(
+        response.name,
+        response.email,
+        response.userType,
+        response.score
+      )
+      setUserData(newData);
       setShowUserProfile(true);
     } catch (error) {
       console.error("Update user data error:" + error)
@@ -52,8 +58,8 @@ function SideMenu({ userData, setUserData, changeFilters, setShowUserProfile, se
   }
 
   const handleUsersClick = () => {
-      setActiveButton('users');
-      setShowAdmin(true);
+    setActiveButton('users');
+    setShowAdmin(true);
   }
 
   return (
