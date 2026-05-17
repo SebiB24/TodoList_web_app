@@ -172,7 +172,7 @@ const TaskDetail = ({ task, setdisplayedTask, setUpdate }) => {
                     </div>
 
                     <div className="detail-actions">
-                        <button className="complete-btn" onClick={onSaveEdit}>Save</button>
+                        <button className="edit-btn" onClick={onSaveEdit}>Save</button>
                         <button className="delete-btn" onClick={() => setEditMode(false)}>Cancel</button>
                     </div>
                 </div>

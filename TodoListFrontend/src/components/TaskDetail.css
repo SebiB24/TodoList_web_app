@@ -115,7 +115,7 @@
 
 .edit-btn {
     flex: 2;
-    background-color: #000000;
+    background-color: #0e205d;
     color: #ffffff;
     border: none;
     padding: 12px;
@@ -127,11 +127,11 @@
 }
 
 .complete-btn:hover {
-    background-color: #549a0d;
+    background-color: #69c211;
 }
 
 .edit-btn:hover {
-    background-color: #333333;
+    background-color: #0c2b8f;
 }
 
 .delete-btn {

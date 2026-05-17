@@ -11,15 +11,20 @@ import { ListTypes } from "./TaskList";
 
 function TaskListItem({ task, setUpdate, listType, setdisplayedTask }) {
 
-    const [taskDueStatus, setTaskDueStatus] = useState(() => {
-        if (isTaskDueToday(task)) {
-            return 'today';
+    const [taskDueStatus, setTaskDueStatus] = useState()
+
+    useEffect(() => {
+        const TaskDueStatus = () => {
+            if (isTaskDueToday(task)) {
+                return 'today';
+            }
+            if (isTaskPastDue(task)) {
+                return 'overdue';
+            }
+            return 'upcoming';
         }
-        if (isTaskPastDue(task)) {
-            return 'overdue';
-        }
-        return 'upcoming';
-    });
+        setTaskDueStatus(TaskDueStatus)
+    }, [task])
 
     const onCompleteTask = async (event) => {
         event.stopPropagation();
