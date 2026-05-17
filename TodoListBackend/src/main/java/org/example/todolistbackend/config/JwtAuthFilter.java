@@ -10,6 +10,7 @@ import org.example.todolistbackend.model.User;
 import org.example.todolistbackend.repository.IUsersRepo;
 import org.example.todolistbackend.service.JwtService;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.List;
 
 @Component
 @RequiredArgsConstructor
@@ -43,11 +45,15 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 User user = usersRepo.getUserById(userId);
 
                 if(user != null){
+                    List<SimpleGrantedAuthority> authorities = List.of(
+                            new SimpleGrantedAuthority("ROLE_" + user.getUserType().toString())
+                    );
+
                     // setting up the spring ID for the current request
                     UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                             user,
                             null,
-                            null
+                            authorities
                     ); // saves the user data
                     authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request)); // saves the network data of the request (like ip)
                     SecurityContextHolder.getContext().setAuthentication(authToken); // saves the spring ID
